@@ -1,61 +1,170 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/8D8nIuef)
-# Easter Task API
-This is an optional task to keep you busy throughout the Easter break if you so wish to continue practising API skills ⚔️
+# 🥚 Easter Eggs API
 
-## The objective
-I want to keep this challenge super simple, so that you can have a chance to practice using all of the necessary skills from this module, without spending too much time on each section.
-- Create a back end server app with **Express**.
-- Use **Sequelize** to connect to a **MySql** database.
-- Create a **single model** to perform CRUD operations on the database.
-- Create a **single service** class to encapsulate all of the available functionality of a associated entity.
-- Create a **single route** that holds endpoints for a single entity.
-- Wire up this single route to the server app.
-- Write some unit tests with **Jest** and **Supertest**.
+A simple RESTful API built with **Node.js**, **Express**, **Sequelize**, and **MySQL** for managing Easter eggs.
+This project demonstrates backend fundamentals including CRUD operations, authentication with JWT, and automated testing.
 
-## The single entity
-We'll keep in on theme; I want to you to store data for Easter Eggs! Only a single table in the Database. No associations. No foreign keys. No ERDs. For a single Easter Egg record, store:
-- id (PK): `Number (auto-increment)`
-- color: `String(30)`
-- weight: `Float`
+---
 
-## Requirements
-Create a REST API with the following endpoints:
+## 🚀 Features
 
-### Auth:
-- `POST` `/login`: Should return a response to the client that includes a JWT with the payload:
+* Express server setup
+* MySQL database connection using Sequelize
+* CRUD operations for a single entity (Eggs)
+* JWT-based authentication
+* Protected routes
+* Swagger API documentation
+* Unit testing with Jest and Supertest
+
+---
+
+## 🗂️ Tech Stack
+
+* Node.js
+* Express
+* Sequelize
+* MySQL
+* JWT (jsonwebtoken)
+* Jest & Supertest
+* Swagger (swagger-ui-express & swagger-autogen)
+
+---
+
+## 📦 Installation
+
+```bash
+git clone <your-repo-url>
+cd easter-api
+npm install
+```
+
+---
+
+## ⚙️ Setup
+
+Make sure you have MySQL running locally.
+
+Create a database:
+
+```sql
+CREATE DATABASE easter_db;
+```
+
+Update your database credentials in `models/index.js` if needed.
+
+---
+
+## ▶️ Run the server
+
+```bash
+node server.js
+```
+
+Server runs on:
+
+```txt
+http://localhost:3000
+```
+
+---
+
+## 📄 API Documentation
+
+Swagger UI available at:
+
+```txt
+http://localhost:3000/doc
+```
+
+---
+
+## 🔐 Authentication
+
+### Login
+
+```http
+POST /login
+```
+
+Response:
+
 ```json
 {
-    "status": "LOGGED_IN"
+  "token": "your_jwt_token"
 }
 ```
-> **Note:** There is no need to use any `username` & `password` logic, or interact with the DB.
 
-### Eggs:
-- `GET` `/eggs`: Fetch all egg records from the DB. *No JWT required*
-- `GET` `/eggs/:id`: Fetch an egg record from the DB by ID. *No JWT required*
-- `POST` `/eggs`: Add a new egg record to the DB. *Valid JWT required, else error 401*
-- `PUT` `/eggs`: Update an egg record in the DB. *Valid JWT required, else error 401*
-- `DELETE` `/eggs`: Delete an egg record from the DB. *Valid JWT required, else error 401*
+Use this token to access protected routes:
 
-## Services
-Use an `EggService` class that depends on models to interact with the database. The `EggService` class should have the following async functions:
-- getAllEggs()
-- getEggById(id)
-- createEgg(newEgg)
-- updateEgg(id, updatedEgg)
-- deleteEgg(id)
+```http
+Authorization: Bearer <token>
+```
 
-## Swagger docs
-Use `swagger-autogen` and `swagger-ui-express` to generate a `/doc` endpoint that renders a Swagger page for the API.
+---
 
-## Unit tests
-Use `jest` and `supertest` to write the following tests:
-1. Send a `GET` request to the `/eggs` endpoint. Receive a list of eggs, and status code 200.
-2. Send a `POST` request to the `/login` endpoint to get a JWT.
-3. Send a `POST` request to the `/eggs` endpoint. Receive a code 201. Save the id of the newly created egg for the next test.
-4. Send a `PUT` request to the `/eggs/:id` with the id from test 3. Receive a code 204.
-5. Send a `DELETE` request to the `/eggs/:id` with the id from test 3. Receive a code 204.
-6. Repeat test 5. Receive a code 404. The egg with the id does not exist because it was just deleted.
+## 🥚 Endpoints
 
-## Good luck 🏆
-Feel free to add bonus content to this project if you feel necessary, for example, adding an endpoint `/eggs/count` to count the number of eggs in the database.
+### Public
+
+* `GET /eggs` → Get all eggs
+* `GET /eggs/:id` → Get egg by ID
+
+### Protected (JWT required)
+
+* `POST /eggs` → Create a new egg
+* `PUT /eggs/:id` → Update an egg
+* `DELETE /eggs/:id` → Delete an egg
+
+---
+
+## 🧪 Testing
+
+Run tests with:
+
+```bash
+npm test
+```
+
+Tests include:
+
+* GET /eggs
+* POST /login
+* POST /eggs
+* PUT /eggs/:id
+* DELETE /eggs/:id
+* DELETE non-existing egg
+
+---
+
+## 🧱 Project Structure
+
+```
+project/
+│── models/        # Sequelize models
+│── routes/        # API routes
+│── services/      # Business logic
+│── middleware/    # Auth middleware
+│── tests/         # Jest tests
+│── app.js         # Express app setup
+│── server.js      # Server entry point
+```
+
+---
+
+## 💡 Notes
+
+* No user authentication logic (login always returns a valid JWT)
+* Single table (Eggs), no relationships
+* Designed for learning and practice
+
+---
+
+## 🏁 Status
+
+✅ Completed
+Includes all required features + testing
+
+---
+
+## 👨‍💻 Author
+
+Trym Solheim
